@@ -10,12 +10,18 @@ public class FoodHandler : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        StartCoroutine(dead());
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         rb.MovePosition(transform.position + new Vector3(0,0,1) * Time.fixedDeltaTime * speed);
-        
+    }
+
+    IEnumerator dead(){
+        yield return new WaitForSeconds(3.0f);
+        Debug.Log("Deleted");
+        Destroy(gameObject);
     }
 }

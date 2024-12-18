@@ -19,9 +19,13 @@ public class EnemyHandler : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider other){
-        if (other.gameObject.name == "Food" || other.gameObject.name == "Player")
+        Debug.Log(other.gameObject.name);
+        if (other.gameObject.name.Contains("Food"))
         {
             Destroy(gameObject);
+            Destroy(other.gameObject);
+        }else if (other.gameObject.name == "Player"){
+
         }
     }
 }
