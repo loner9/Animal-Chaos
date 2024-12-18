@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] GameObject pauseCanvas;
     PlayerInput inputs;
+    public float score;
+    public float time;
     
     void Awake(){
         inputs = new PlayerInput();
@@ -37,6 +39,11 @@ public class GameManager : MonoBehaviour
 
     public void toMain(){
         SceneManager.LoadScene("MainMenu");
+        Time.timeScale = 1;
+    }
+
+    public void retry(){
+        SceneManager.LoadScene("Game");
         Time.timeScale = 1;
     }
 
