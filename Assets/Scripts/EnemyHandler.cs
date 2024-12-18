@@ -22,6 +22,9 @@ public class EnemyHandler : MonoBehaviour
         Debug.Log(other.gameObject.name);
         if (other.gameObject.name.Contains("Food"))
         {
+            GameObject gm = GameObject.FindGameObjectWithTag("GameManager");
+            GameManager gameManager = gm.GetComponent<GameManager>();
+            gameManager.score += 1;
             Destroy(gameObject);
             Destroy(other.gameObject);
         }else if (other.gameObject.name == "Player"){

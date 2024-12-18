@@ -1,5 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using UnityEditor.Timeline;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,7 +11,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject pauseCanvas;
     PlayerInput inputs;
     public float score;
-    public float time;
+    public float time = 60;
+    [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] TextMeshProUGUI timerText;
+    [SerializeField] TextMeshProUGUI scoreTextOver;
+    [SerializeField] GameObject gameOver;
+    private IEnumerator coroutine;
     
     void Awake(){
         inputs = new PlayerInput();
@@ -18,12 +26,24 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         inputs.UI.Pause.performed += ctx => pauseMenu();
+        coroutine = timerUp(1f);
+        StartCoroutine(coroutine);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        updateScore();
+
+        if (time == 0)
+        {
+            gameOver.SetActive(true);
+            scoreTextOver.text = score.ToString();
+        }
+    }
+
+    void updateScore(){
+        scoreText.text = score.ToString();
     }
 
     public void pauseMenu(){
@@ -55,5 +75,14 @@ public class GameManager : MonoBehaviour
     void OnDisable()
     {
         inputs.Disable();
+    }
+
+    IEnumerator timerUp(float waktu){
+        while (time > 0)
+        {
+            yield return new WaitForSeconds(waktu);
+            time--;
+            timerText.text = time.ToString();
+        }
     }
 }
